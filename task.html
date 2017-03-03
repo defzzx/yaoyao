@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Document</title>
+<style type="text/css">
+div {
+	width: 350px;
+	margin: 50px auto;
+}
+input {
+	height: 28px;
+	width: 180px;
+}
+label {
+	display: inline-block;
+	height: 35px;
+}
+button {
+	width: 65px;
+	height: 35px;
+	margin-left: 2px;
+	background: #2F79BA;
+	border: none;
+	border-radius: 5px;
+	color: #fff;
+	font-size: 15px;
+	font-family: simhei;
+	font-weight: 800;
+	letter-spacing: 5px;
+	text-indent: 6px;
+}
+p {
+	padding-left: 54px;
+	font-size: 13px;
+	font-family: simhei;
+}
+</style>
+</head>
+<body>
+<div>
+	<label>
+			<span>会员名:</span>
+			<input type="text" class="text"  />
+		</label>
+	<button class="btn">验证</button>
+	<p class="msg">必填,长度为4-16个字符</p>
+</div>
+
+<script type="text/javascript">
+var input = document.getElementsByTagName('input')[0];
+var verify = document.getElementsByTagName('button')[0];
+var verification = document.getElementsByTagName('p')[0];
+var msg = document.getElementsByClassName('msg')[0];
+verify.addEventListener('click', vFing, false);
+input.addEventListener('blur', vFing, false);
+
+
+function vFing() {
+	var reg = /^[a-z]/
+	var text = input.value;
+	if(!text) {
+		msg.innerHTML = '会员名不能为空';
+		msg.style.color = '#f00';
+	} else if(countLength(text) < 4 || countLength(text) > 16) {
+		msg.innerHTML = '请核对会员名长度是否为4-16字符';
+		msg.style.color = '#f00';
+	} else if(!reg.test(text)) {
+		msg.innerHTML = '会员名请以字母开头';
+		msg.style.color = '#f00';
+	} else {
+		msg.innerHTML = '验证通过';
+		msg.style.color = '#0f0';
+	}
+
+}
+var countLength = function(str) {
+	var codeLength = 0;
+	for(var i = 0; i < str.length; i++) {
+		if(str.charCodeAt(i) >= 0 && str.charCodeAt(i) <= 128) {
+			codeLength++;
+		} else {
+			codeLength += 2;
+		}
+	}
+	return codeLength;
+}
+</script>
+</body>
+</html>
