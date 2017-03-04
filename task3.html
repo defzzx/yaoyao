@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>task3</title>
+<style type="text/css">
+#wrapper {
+	width: 450px;
+	height: 300px;
+	margin: 100px auto;
+}
+label {
+	display: inline-block;
+	width: 200px;
+	margin-bottom: 50px;
+}
+select {
+	width: 160px;
+	margin-right: 10px;
+	height: 30px;
+	padding: 4px;
+	margin-left: 50px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+}
+select:nth-child(2) {
+	width: 80px;
+}
+span {
+	font-weight: 700;
+	font-family: simhei
+}
+#society input {
+	width: 300px;
+	margin-left: 15px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	height: 25px;
+}
+#society {
+	display: none;
+}
+</style>
+</head>
+<body>
+<div id="wrapper">
+	<label>
+	<input type="radio" name='stk' value="student" checked="checked" />在校生
+</label>
+	<label>
+	<input type="radio" name="stk" value="society" />非在校生
+</label>
+	<div id="student">
+		<span>学校</span>
+		<select name="city" id="city">
+			<option value="beijing">北京</option>
+			<option value="shanghai">上海</option>
+		</select>
+		<select name="school" id="school">
+			<option value="renda">中国人民大学</option>
+			<option value="shida">北京师范大学</option>
+		</select>
+	</div>
+	<div id="society">
+		<span>就业单位</span>
+		<input type="text" />
+	</div>
+</div>
+<input type="image" src="img/flower.png">
+<script type="text/javascript">
+var lab = document.getElementsByTagName('label');
+var stu = document.getElementById("student");
+var soy = document.getElementById("society");
+var city = document.getElementById("city");
+lab[0].addEventListener('click', fn1, false);
+lab[1].addEventListener('click', fn2, false);
+var school = document.getElementById("school")
+city.addEventListener('change', clickOpt, false)
+
+function fn1() {
+	stu.style.display = 'block';
+	soy.style.display = 'none';
+}
+
+function fn2() {
+	stu.style.display = 'none';
+	soy.style.display = 'block';
+}
+
+function clickOpt() {
+	function addOption(val, txt) {
+		var opt = document.createElement('option');
+		opt.text = txt;
+		opt.value = val;
+		school.options.add(opt);
+		//		school.appendChild(opt)
+	}
+	var cValue = city.value;
+	var school = document.getElementById("school");
+	var len = school.options.length;
+	if(len > 0) {
+		school.options.length = 0;
+	}
+	//重新创建子选项
+	if(cValue == 'beijing') {
+		addOption('renda', '中国人民大学');
+		addOption('shida', '北京师范大学');
+	} else {
+		addOption('fudan', '复旦大学')
+		addOption('jiaoda', '上海交通大学');
+	}
+}
+</script>
+</body>
+</html>
