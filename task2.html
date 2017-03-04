@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Document</title>
+<style type="text/css">
+form {
+	width: 450px;
+	height: 80px;
+	margin: 30px auto;
+}
+label {
+	width: 80px;
+	display: inline-block;
+	text-align: right;
+	font-weight: 700;
+}
+input {
+	width: 300px;
+	height: 33px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	margin-left: 10px;
+	padding-left: 10px;
+}
+p {
+	text-indent: 95px;
+	font-size: 13px;
+	margin-top: 10px;
+	font-family: simhei;
+	height: 20px;
+	font-weight: 700;
+}
+button {
+	margin-left: 330px;
+	width: 75px;
+	height: 35px;
+	background: #2F79BA;
+	border: none;
+	color: #fff;
+	font-size: 16px;
+	font-weight: 700;
+	letter-spacing: 6px;
+	text-indent: 5px;
+}
+</style>
+</head>
+<body>
+<form>
+
+	<div>
+		<label for="signname">
+			<span>名称</span>
+	</label>
+		<input type="text" class="text" id="signname" />
+		<p class="msg"></p>
+	</div>
+	<div>
+		<label for="psw">
+			<span>密码</span>
+	</label>
+		<input type="password" class="text" id="psw" />
+		<p class="msg"></p>
+	</div>
+	<div>
+		<label for="rppsw">
+			<span>密码确认</span>
+	</label>
+		<input type="password" class="text" id="rppsw" />
+		<p class="msg"></p>
+	</div>
+	<div>
+		<label for="email">
+			<span>邮箱</span>
+	</label>
+		<input type="email" class="text" id="email" />
+		<p class="msg"></p>
+	</div>
+	<div>
+		<label for="tel">
+			<span>手机:</span>
+	</label>
+		<input type="tel" class="text" id="tel" />
+		<p class="msg"></p>
+	</div>
+
+	<button>提交</button>
+</form>
+<script type="text/javascript">
+var inputs = document.getElementsByTagName('input');
+var msg = document.getElementsByTagName('p');
+var btn = document.getElementsByTagName('button')[0];
+btn.addEventListener('click', goSubmit, false);
+! function() {
+	for(var i = 0; i < inputs.length; i++) {
+		(function(k) {
+			inputs[k].addEventListener('focus', function() {
+				this.style.borderColor = '#62AEEC';
+				nol(k)
+				console.log(k)
+			}, false);
+			inputs[k].addEventListener('blur', function() {
+				Fy(k);
+			}, false)
+		})(i)
+	}
+}();
+
+function nol(x) {
+	switch(x) {
+		case 0:
+			msg[x].innerHTML = '长度为4-16字符,可以为字母数字下划线或汉字!';
+			msg[x].style.color = '#666';
+			break;
+		case 1:
+			msg[x].innerHTML = '密码长度为6-12位字母或数字';
+			msg[x].style.color = '#666';
+			break;
+		case 2:
+			msg[x].innerHTML = '请重复输入密码';
+			msg[x].style.color = '#666';
+			break;
+		case 3:
+			msg[x].innerHTML = '请输入注册邮箱';
+			msg[x].style.color = '#666';
+			break;
+		case 4:
+			msg[x].innerHTML = '请输入11位手机号码';
+			msg[x].style.color = '#666';
+			break;
+	}
+}
+
+function Fy(x) {
+	switch(x) {
+		case 0:
+			vFing();
+			break;
+		case 1:
+			psFy();
+			break;
+		case 2:
+			psagFy();
+			break;
+		case 3:
+			mailFy();
+			break;
+		case 4:
+			telFy();
+			break;
+	}
+}
+
+//检测姓名函数
+function vFing() {
+	var reg = /^[a-z][\w_\u4E00-\u9FA5]+$/ig;
+	var text = inputs[0].value;
+	if(!text) {
+		msg[0].innerHTML = '会员名不能为空';
+		msg[0].style.color = '#f00';
+		inputs[0].style.borderColor = '#f00';
+	} else if(countLength(text) < 4 || countLength(text) > 16) {
+		msg[0].innerHTML = '请核对会员名长度是否为4-16字符';
+		msg[0].style.color = '#f00';
+		inputs[0].style.borderColor = '#f00';
+	} else if(!reg.test(text)) {
+		msg[0].innerHTML = '会员名请以字母开头';
+		msg[0].style.color = '#f00';
+		inputs[0].style.borderColor = '#f00';
+	} else {
+		msg[0].innerHTML = '验证通过';
+		msg[0].style.color = '#0f0';
+		inputs[0].style.borderColor = '#0f0';
+		return true;
+	}
+
+}
+//定义检测字符编码长度函数
+var countLength = function(str) {
+	return str.replace(/[^x00-xff]/g, 'xx').length;
+}
+
+function psFy() {
+	var reg = /^[\w]{6,12}$/i;
+	var text = inputs[1].value;
+	if(reg.test(text)) {
+		msg[1].innerHTML = '密码输入正确';
+		msg[1].style.color = '#0f0';
+		inputs[1].style.borderColor = '#0f0';
+		return true;
+	} else {
+		msg[1].innerHTML = '密码不符合规则';
+		msg[1].style.color = '#f00';
+		inputs[1].style.borderColor = '#f00';
+	}
+}
+
+function psagFy() {
+	var text = inputs[1].value;
+	var text1 = inputs[2].value;
+	if(text == text1) {
+		msg[2].innerHTML = '密码验证成功';
+		msg[2].style.color = '#0f0';
+		inputs[2].style.borderColor = '#0f0'
+		return true;
+	} else {
+		msg[2].innerHTML = '两次输入密码不匹配';
+		msg[2].style.color = '#f00';
+		inputs[2].style.borderColor = '#f00'
+	}
+}
+
+function mailFy() {
+	var reg = /^[\w_]{4,20}@\w+\.[a-z]{2,5}$/
+	var text = inputs[3].value;
+	if(reg.test(text)) {
+		msg[3].innerHTML = '邮箱验证成功';
+		msg[3].style.color = '#0f0';
+		inputs[3].style.borderColor = '#0f0'
+		return true;
+	} else {
+		msg[3].innerHTML = '邮箱格式错误';
+		msg[3].style.color = '#f00';
+		inputs[3].style.borderColor = '#f00'
+	}
+}
+
+function telFy() {
+	var reg = /^[0-9]{11}$/;
+	var text = inputs[4].value;
+	if(reg.test(text)) {
+		msg[4].innerHTML = '手机验证成功';
+		msg[4].style.color = '#0f0';
+		inputs[4].style.borderColor = '#0f0'
+		return true;
+	} else {
+		msg[4].innerHTML = '手机输入有误,请输入正确手机号码';
+		msg[4].style.color = '#f00';
+		inputs[4].style.borderColor = '#f00'
+	}
+}
+
+function goSubmit(e) {
+	e.preventDefault();
+	if(telFy() && vFing() && psFy() && psagFy() && mailFy()) {
+		alert('提交成功')
+	} else {
+		alert('提交失败请核对信息')
+	}
+}
+</script>
+</body>
+</html>
