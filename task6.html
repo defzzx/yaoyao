@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>task6</title>
+<style type="text/css">
+body {
+	margin: 0;
+	padding: 0;
+	position: relative;
+}
+#clk {
+	margin-left: 200px;
+}
+#masker {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	text-align: center;
+	background: #000;
+	opacity: .2;
+	display: none;
+	color: #fff;
+}
+#sign {
+	position: absolute;
+	width: 450px;
+	height: 230px;
+	background: #fff;
+	overflow: hidden;
+	text-indent: 10px;
+	border: 1px solid #ccc;
+	display: none;
+	z-index: 1;
+}
+h2 {
+	padding: 0;
+	font-size: 16px;
+	background: #858585;
+	height: 40px;
+	margin: 0;
+	line-height: 40px;
+	color: #fff;
+	cursor: move;
+}
+#sign button {
+	width: 90px;
+	height: 32px;
+	margin-top: 99px;
+	margin-right: 10px;
+}
+#sign :nth-child(3) {
+	margin-left: 220px;
+}
+#p {
+	overflow: hidden;
+}
+</style>
+</head>
+<body>
+<div id="p">
+	<p>1</p>
+	<p>1</p>
+	<p>1</p><button id="clk">点我弹出浮出层</button>
+	<p>1</p>
+	<p>1</p>
+	<p>1</p>
+	<p>1</p>
+	<p>1</p>
+	<p>1</p>
+	<p>1</p>
+	<p>1</p>
+	<p>1</p>
+	<p>1</p>
+	<p>1</p>
+	<p>1</p>
+	<p>1</p>
+	<p>1</p>
+	<p>1</p>
+	<p>1</p>
+	<p>1</p>
+	<p>1</p>
+</div>
+
+<div id="sign">
+	<h2>这是一个浮出层</h2>
+	<p>这是一个浮出层</p>
+	<button id="confirm">确认</button>
+	<button id="cancel">取消</button>
+</div>
+<div id="masker">我是遮罩层别理我</div>
+<script type="text/javascript">
+var clk = document.getElementById("clk");
+var masker = document.getElementById("masker");
+var sign = document.getElementById("sign");
+var h2 = document.getElementsByTagName('h2')[0];
+var con = document.getElementById('confirm');
+var can = document.getElementById('cancel');
+con.addEventListener('click', cancel, false);
+can.addEventListener('click', cancel, false);
+clk.addEventListener('click', go, false);
+window.addEventListener('resize', res, false);
+h2.addEventListener('mousedown', down, false);
+document.addEventListener('click', cancel, false);
+sign.addEventListener('click', sb, false)
+
+function go(e) {
+	e.stopPropagation();
+	document.documentElement.style.overflow = 'hidden';
+	masker.style.display = 'block';
+	sign.style.display = 'block';
+	var left = (document.documentElement.clientWidth - sign.offsetWidth) / 2;
+	var top = (document.documentElement.clientHeight - sign.offsetHeight) / 2;
+	sign.style.left = left + 'px';
+	sign.style.top = top + 'px';
+}
+
+function res() {
+	var left = (document.documentElement.clientWidth - sign.offsetWidth) / 2;
+	var top = (document.documentElement.clientHeight - sign.offsetHeight) / 2;
+	sign.style.left = left + 'px';
+	sign.style.top = top + 'px';
+}
+
+function down(e) {
+	var x = e.clientX - sign.offsetLeft,
+		y = e.clientY - sign.offsetTop;
+	document.addEventListener('mousemove', move, false);
+	document.addEventListener('mouseup', up, false);
+
+	function move(e) {
+		var left = e.clientX - x;
+		var top = e.clientY - y;
+		if(left < 0) {
+			left = 0;
+		} else if(left > document.documentElement.clientWidth - sign.offsetWidth) {
+			left = document.documentElement.clientWidth - sign.offsetWidth
+		}
+		if(top < 0) {
+			top = 0;
+		} else if(top > document.documentElement.clientHeight - sign.offsetHeight) {
+			top = document.documentElement.clientHeight - sign.offsetHeight;
+		}
+		sign.style.left = left + 'px';
+		sign.style.top = top + 'px';
+	}
+
+	function up() {
+		document.removeEventListener('mousemove', move);
+		document.removeEventListener('mouseup', up)
+	}
+}
+
+function cancel() {
+	document.documentElement.style.overflow = 'auto';
+	masker.style.display = 'none';
+	sign.style.display = 'none';
+}
+
+function sb(e) {
+	e.stopPropagation()
+}
+</script>
+</body>
+</html>
